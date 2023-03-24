@@ -8,7 +8,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const cors = require('cors')
 
 
-const {ApolloServerPluginDrainHttpServer} = require("@apollo/server/plugin/drainHttpServer");
+const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } =  require('@apollo/server/plugin/landingPage/default');
 
 const http = require("http");
 
@@ -20,7 +20,15 @@ const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  plugins: [
+    // Install a landing page plugin based on NODE_ENV
+    process.env.NODE_ENV === 'production'
+      ? ApolloServerPluginLandingPageProductionDefault({
+          graphRef: 'my-graph-id@my-graph-variant',
+          footer: false,
+        })
+      : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+  ],
   context: authMiddleware,
 });
 
