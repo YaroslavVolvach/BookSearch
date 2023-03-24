@@ -36,11 +36,7 @@ if (process.env.NODE_ENV === 'production'){
 
 async function startApolloServer(typeDefs, resolvers) {
   await server.start();
-  app.use(
-    cors({
-     methods: ['GET', 'POST', 'OPTIONS'], credentials: true, maxAge: 600,
-     origin: [ 'http://example.com','https://studio.apollographql.com'],
-    })),
+  app.use(cors({ methods: ['GET', 'POST', 'OPTIONS'], credentials: true, maxAge: 600, origin: ['*'],})),
   app.use(cors(), expressMiddleware(server));
   db.once("open", () => {
     httpServer.listen(PORT, () => {
