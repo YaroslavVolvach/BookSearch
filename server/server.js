@@ -5,6 +5,9 @@ const { authMiddleware } = require("./utils/auth");
 const { ApolloServer } = require("apollo-server-express");
 const { expressMiddleware } = require("@apollo/server/express4");
 const { typeDefs, resolvers } = require("./schemas");
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
+
+
 
 const {
   ApolloServerPluginDrainHttpServer,
@@ -19,6 +22,7 @@ const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  cache: new InMemoryLRUCache(),
   context: authMiddleware,
 });
 
