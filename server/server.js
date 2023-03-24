@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 
 async function startApolloServer(typeDefs, resolvers) {
   await server.start();
-  app.use(cors(), express.json(), expressMiddleware(server));
+  app.use("/graphql", cors(), express.json(), expressMiddleware(server));
   db.once("open", () => {
     httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
