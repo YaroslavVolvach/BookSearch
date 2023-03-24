@@ -35,9 +35,9 @@ if (process.env.NODE_ENV === 'production') {
 
 //app.use(routes);
 
-const startApolloServer = async (typeDefs, resolvers) => {
+async function startApolloServer(typeDefs, resolvers) {
   await server.start();
-  server.applyMiddleware({ app });
+  app.use(expressMiddleware(server));
 
   db.once("open", () => {
     httpServer.listen(PORT, () => {
