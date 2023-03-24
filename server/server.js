@@ -8,16 +8,14 @@ const { typeDefs, resolvers } = require("./schemas");
 const cors = require('cors')
 
 
-const {
-  ApolloServerPluginDrainHttpServer,
-} = require("@apollo/server/plugin/drainHttpServer");
+const {ApolloServerPluginDrainHttpServer} = require("@apollo/server/plugin/drainHttpServer");
 
 const http = require("http");
 
 const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3001;
-app.use(cors())
+
 
 const server = new ApolloServer({
   typeDefs,
@@ -38,6 +36,11 @@ if (process.env.NODE_ENV === 'production'){
 
 async function startApolloServer(typeDefs, resolvers) {
   await server.start();
+  app.use(
+    cors({
+     methods: ['GET', 'POST', 'OPTIONS'], credentials: true, maxAge: 600,
+     origin: [ 'http://example.com','https://studio.apollographql.com'],
+    })),
   app.use(cors(), expressMiddleware(server));
   db.once("open", () => {
     httpServer.listen(PORT, () => {
