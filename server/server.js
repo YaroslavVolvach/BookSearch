@@ -22,11 +22,7 @@ app.use(cors())
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  cors: {
-    origin: true,
-    credentials: true, // true if you need cookies/authentication
-    methods: ['GET', 'POST', 'OPTIONS'],
-  },
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   context: authMiddleware,
 });
 
