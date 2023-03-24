@@ -20,6 +20,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.0",
     "apollo-server-express": "^3.12.0"
   }
 }
