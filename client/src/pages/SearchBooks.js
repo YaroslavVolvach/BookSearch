@@ -6,7 +6,7 @@ import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { SAVE_BOOK } from '../utils/mutations';
 
-function SearchBooks() {
+const SearchBooks = () => {
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
@@ -18,13 +18,17 @@ function SearchBooks() {
   const [saveBook] = useMutation(SAVE_BOOK);
 
 
-  useEffect(() => saveBookIds(savedBookIds));
+  useEffect(() => {
+    return () => saveBookIds(savedBookIds);
+  });
 
   // create method to search for books and set state on form submit
-  async function handleFormSubmit(event) {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (!searchInput) {return false}
+    if (!searchInput) {
+      return false;
+    }
 
     try {
       const response = await searchGoogleBooks(searchInput);
@@ -45,23 +49,34 @@ function SearchBooks() {
      
       setSearchedBooks(bookData);
       setSearchInput('');
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
 
-async function handleSaveBook(bookId){
+  const handleSaveBook = async (bookId) => {
     
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
     setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+    // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     
-    if (!token) {return false;}
+    if (!token) {
+      return false;
+    }
     try {
-        await saveBook({ variables: { book: bookToSave }}); 
-    } catch (error) {
-      console.error(error);
+      // eslint-disable-next-line
+      const {data} = await saveBook({
+        variables: { book: bookToSave },
+
+      });
+      
+      // if book successfully saves to user's account, save book id to state
+        
+      
+    } catch (err) {
+      console.error(err);
     }
   };
 
