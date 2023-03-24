@@ -3,6 +3,7 @@ const path = require('path');
 const db = require('./config/connection');
 const { authMiddleware } = require("./utils/auth");
 const { ApolloServer } = require("apollo-server-express");
+const { InMemoryLRUCache } = require('@apollo/utils.keyvaluecache');
 const { expressMiddleware } = require("@apollo/server/express4");
 const { typeDefs, resolvers } = require("./schemas");
 var cors = require('cors')
@@ -23,7 +24,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
-  persistedQueries: false
+  persistedQueries: false,
+  cache: new InMemoryLRUCache()
 });
 
 app.use(express.urlencoded({ extended: true }));
