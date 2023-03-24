@@ -18,9 +18,7 @@ const SearchBooks = () => {
   const [saveBook] = useMutation(SAVE_BOOK);
 
 
-  useEffect(() => {
-    return () => saveBookIds(savedBookIds);
-  });
+  useEffect(() => () => saveBookIds(savedBookIds));
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {

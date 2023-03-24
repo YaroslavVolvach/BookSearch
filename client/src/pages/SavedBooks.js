@@ -6,16 +6,15 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  // eslint-disable-next-line
   const {loading, data} = useQuery(GET_ME);
+
+  console.log('DATA ', data);
   
   const [removeBook] = useMutation(REMOVE_BOOK);
-  // use this to determine if `useEffect()` hook needs to run again
 
   const userData = data?.me || [];
   const userDataLength = Object.keys(userData).length;
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     console.log(bookId);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -25,20 +24,13 @@ const SavedBooks = () => {
     }
 
     try {
-      // const response = await deleteBook(bookId, token);
-      // eslint-disable-next-line
-      const {data} = await removeBook({
-        variables: { bookId }
-      });
-
-      // upon success, remove book's id from localStorage
+      await removeBook({variables: { bookId }});
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // if data isn't here yet, say so
   if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
@@ -47,14 +39,14 @@ const SavedBooks = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Viewing saved books!</h1>
+          <h2>Viewing saved books or try <strong>reloading</strong> the page!</h2>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
           {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'}
+            : 'You do not have saved books or try reloading the page!'}
         </h2>
         <CardColumns>
           {userData.savedBooks.map((book) => {
