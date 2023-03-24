@@ -5,7 +5,7 @@ const { authMiddleware } = require("./utils/auth");
 const { ApolloServer } = require("@apollo/server");
 const { expressMiddleware } = require("@apollo/server/express4");
 const { typeDefs, resolvers } = require("./schemas");
-var cors = require('cors')
+const cors = require('cors')
 
 
 const {
@@ -26,7 +26,6 @@ const server = new ApolloServer({
 });
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
@@ -37,7 +36,7 @@ if (process.env.NODE_ENV === 'production') {
 
 async function startApolloServer(typeDefs, resolvers) {
   await server.start();
-  app.use(expressMiddleware(server));
+  app.use(cors(), express.json(), expressMiddleware(server));
 
   db.once("open", () => {
     httpServer.listen(PORT, () => {
