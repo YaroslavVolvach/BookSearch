@@ -5,6 +5,8 @@ const { authMiddleware } = require("./utils/auth");
 const { ApolloServer } = require("apollo-server-express");
 const { expressMiddleware } = require("@apollo/server/express4");
 const { typeDefs, resolvers } = require("./schemas");
+var cors = require('cors')
+
 
 const {
   ApolloServerPluginDrainHttpServer,
@@ -15,6 +17,7 @@ const http = require("http");
 const app = express();
 const httpServer = http.createServer(app);
 const PORT = process.env.PORT || 3001;
+app.use(cors())
 
 const server = new ApolloServer({
   typeDefs,
