@@ -5,7 +5,7 @@ const { authMiddleware } = require("./utils/auth");
 const { ApolloServer } = require("apollo-server-express");
 const { expressMiddleware } = require("@apollo/server/express4");
 const { typeDefs, resolvers } = require("./schemas");
-import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
+const { InMemoryLRUCache } = require ('@apollo/utils.keyvaluecache');
 
 
 
