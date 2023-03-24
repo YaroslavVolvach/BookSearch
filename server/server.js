@@ -26,6 +26,7 @@ const server = new ApolloServer({
 });
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
@@ -36,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
 
 async function startApolloServer(typeDefs, resolvers) {
   await server.start();
-  app.use("/graphql", cors(), express.json(), expressMiddleware(server));
+  app.use(cors(), expressMiddleware(server));
   db.once("open", () => {
     httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
