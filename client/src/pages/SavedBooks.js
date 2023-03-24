@@ -8,6 +8,7 @@ import { removeBookId } from '../utils/localStorage';
 const SavedBooks = () => {
   // eslint-disable-next-line
   const {loading, data} = useQuery(GET_ME);
+  console.log('GET: ', GET_ME);
   const [removeBook] = useMutation(REMOVE_BOOK);
   // use this to determine if `useEffect()` hook needs to run again
 
