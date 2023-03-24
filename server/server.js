@@ -24,7 +24,6 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
-  persistedQueries: false,
   cache: new InMemoryLRUCache()
 });
 
