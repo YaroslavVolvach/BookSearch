@@ -8,7 +8,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const cors = require('cors')
 
 
-import { ApolloServerPluginLandingPageGraphQLPlayground } from '@apollo/server-plugin-landing-page-graphql-playground';
+const { ApolloServerPluginLandingPageGraphQLPlayground } = required('@apollo/server-plugin-landing-page-graphql-playground')
 
 const http = require("http");
 
