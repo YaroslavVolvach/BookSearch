@@ -24,7 +24,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,
-  cache: new InMemoryLRUCache()
+  cache: "bounded"
 });
 
 app.use(express.urlencoded({ extended: true }));
