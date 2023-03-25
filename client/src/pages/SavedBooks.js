@@ -52,7 +52,6 @@ const SavedBooks = () => {
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You do not have saved books!'}
         </h2>
-            <Nav.Link as={Link} to='/saved'><h2>Update data on the page!</h2></Nav.Link>
         <CardColumns>
           {userData.savedBooks.map((book) => {
             return (
