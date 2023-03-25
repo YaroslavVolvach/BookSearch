@@ -74,7 +74,7 @@ const SavedBooks = () => {
 }
 
 catch{
-  window.location.reload()
+  window.location.replace('https://testrepos.herokuapp.com/')
 }
 
 export default SavedBooks;
