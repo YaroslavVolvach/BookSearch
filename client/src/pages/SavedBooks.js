@@ -5,6 +5,8 @@ import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
+try{
+
 const SavedBooks = () => {
   const {loading, data} = useQuery(GET_ME);
 
@@ -39,14 +41,14 @@ const SavedBooks = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h2>Viewing saved books or try <strong>reloading</strong> the page!</h2>
+          <h2>Viewing saved books!</h2>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
           {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You do not have saved books or try reloading the page!'}
+            : 'You do not have saved books!'}
         </h2>
         <CardColumns>
           {userData.savedBooks.map((book) => {
@@ -69,5 +71,10 @@ const SavedBooks = () => {
     </>
   );
 };
+}
+
+catch{
+  window.location.reload()
+}
 
 export default SavedBooks;
