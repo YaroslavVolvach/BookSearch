@@ -4,8 +4,9 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+import { Nav } from 'react-bootstrap';
 
-try{
+
 
 const SavedBooks = () => {
   const {loading, data} = useQuery(GET_ME);
@@ -50,6 +51,7 @@ const SavedBooks = () => {
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You do not have saved books!'}
         </h2>
+            <Nav.Link as={Link} to='/saved'><h2>Update data on the page!</h2></Nav.Link>
         <CardColumns>
           {userData.savedBooks.map((book) => {
             return (
@@ -71,10 +73,6 @@ const SavedBooks = () => {
     </>
   );
 };
-}
 
-catch{
-  window.location.replace('https://testrepos.herokuapp.com/')
-}
 
 export default SavedBooks;
