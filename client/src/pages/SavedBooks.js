@@ -4,6 +4,7 @@ import { REMOVE_BOOK } from '../utils/mutations';
 import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
+import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
 
